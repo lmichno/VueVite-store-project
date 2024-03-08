@@ -6,21 +6,25 @@ const get = (url) => new Promise((resolve, reject) => {
     setTimeout(() => {
 
         // axios get request to get data from url
+        console.log('lol');
         axios.get(url).then((res) => {
 
             // res.data to get data from response
             console.log("data", res.data);
             resolve(res.data);
         }).catch((err) => {
-
+            console.log('aaaaa');
             // reject promise with error
             reject(err);
         });
-    }, 100 + Math.random() * 1000);
+    }, 100);
 })
 
 // getPromotions function to get promotions
-const getPromotions = () => get("http://localhost:3000/promotions");
+const getPromotions = () => {
+    console.log('getPromotions');
+    return get("http://localhost:3000/promotions")
+};
 
 // export getPromotions function
 export {
