@@ -1,7 +1,7 @@
 <template>
     <div :style="contStyle">
-        <h3>{{ this.promotion.header }}</h3>
-        <h2>{{ this.promotion.description }}</h2>
+        <h3 spellcheck="false">{{ this.promotion.header }}</h3>
+        <h2 spellcheck="false">{{ this.promotion.description }}</h2>
     </div>
 </template>
 
@@ -26,13 +26,20 @@ export default {
 
 <style scoped>
 h3 {
+    user-select: none;
     font-size: 3rem;
     font-weight: 800;
     color: white;
-    text-decoration: none;
+    border: none;
+    outline: none;
+    text-decoration:none;
     text-shadow: 4px 4px 6px rgba(66, 68, 90, 1);
+    --fbc-blue-60: none;
 }
 h2 {
+    border: none;
+    outline: none;
+    user-select: none;
     font-size: 1.3rem;
     text-decoration: none;
     font-weight: 400;

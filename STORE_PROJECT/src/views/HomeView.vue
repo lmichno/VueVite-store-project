@@ -33,8 +33,15 @@ export default {
 </script>
 
 <style scoped>
+a {
+    text-decoration: none;
+}
 .home-view {
     text-align: center;
     margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 </style>

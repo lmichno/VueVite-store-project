@@ -26,7 +26,11 @@ const getPromotions = () => {
     return get("http://localhost:3000/promotions")
 };
 
+const getPromotion = (id) => get(`http://localhost:3000/promotion/${id}`)
+const getProduct = (id) => get(`http://localhost:3000/product/${id}`)
 // export getPromotions function
 export {
-    getPromotions
+    getPromotions,
+    getPromotion,
+    getProduct
 }
