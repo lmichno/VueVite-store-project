@@ -17,7 +17,7 @@ const get = (url) => new Promise((resolve, reject) => {
             // reject promise with error
             reject(err);
         });
-    }, 100);
+    }, 1000);
 })
 
 // getPromotions function to get promotions

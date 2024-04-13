@@ -3,6 +3,7 @@
         <h1>Welcome to the Home View!</h1>
         <p>This is the home page of your application.</p>
 
+        <AppLoader v-show="promotionsLoading" />
         <RouterLink v-for="promotion in promotionsList" :to="`/promotion/${promotion.id}`" :key="promotion.id">
             <PromotionTile v-bind:promotion="promotion"></PromotionTile>
         </RouterLink>
@@ -11,7 +12,8 @@
 
 <script>
 
-import PromotionTile from '@/components/PromotionTile.vue'
+import PromotionTile from '@/components/PromotionTile.vue';
+import AppLoader from '@/components/AppLoader.vue';
 export default {
     name: 'HomeView',
     created() {
@@ -25,10 +27,15 @@ export default {
             console.log('proms');
             console.log(this.$store.getters.GET_PROMOTIONS_LIST);
             return this.$store.getters.GET_PROMOTIONS_LIST
+        },
+        promotionsLoading() {
+            return this.$store.getters.GET_PROMOTIONS_LOADING
         }
     },
     components: {
-        PromotionTile}
+        PromotionTile,
+        AppLoader
+    }
 }
 </script>
 
@@ -36,6 +43,7 @@ export default {
 a {
     text-decoration: none;
 }
+
 .home-view {
     text-align: center;
     margin-top: 50px;

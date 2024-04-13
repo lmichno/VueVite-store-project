@@ -3,7 +3,7 @@ import { getProduct, getPromotion } from "@/api";
 const promotion = {
     state: {
         promotionObject: {},
-        promotionLoading: {},
+        promotionLoading: true,
         promotionError: {}
     },
     mutations: {
@@ -13,7 +13,7 @@ const promotion = {
     },
 
     getters: {
-        GET_PROMOTION_OBJECT(state) { return state.promotionList },
+        GET_PROMOTION_OBJECT(state) { return state.promotionObject },
         GET_PROMOTION_LOADING(state) { return state.promotionLoading },
         GET_PROMOTION_ERROR(state) { return state.promotionError }
     },
@@ -44,8 +44,8 @@ const promotion = {
             const promotionsList = getters.GET_PROMOTIONS_LIST
 
             // na tym etapie warto wylogować czy mamy dane w store, pobrane z serwera
-
-            console.log(promotionsList)
+            // console.log("promotionsList");
+            // console.log(promotionsList)
 
             // teraz zadanie do samodzielnej realizacji:
             // wyszukaj za pomocą find() w promotionsList taką promocję która ma id = promotionId
@@ -70,6 +70,8 @@ const promotion = {
             po analizie jej działania zalecam spróbować wykonać ją po swojemu
             */
 
+
+
             const handlePromotion = (data) => {
 
                 // tu dostajemy obiekty produktów z danej promocji
@@ -81,8 +83,10 @@ const promotion = {
 
                 // i kończymy ładowanie loadera
 
+
                 Promise.all(fetchPromises)
                     .then((values) => {
+
 
                         const returnObject = { ...data, items: values };
 
@@ -110,6 +114,6 @@ const promotion = {
         }
 
     }
-
-
 }
+
+export default promotion;
