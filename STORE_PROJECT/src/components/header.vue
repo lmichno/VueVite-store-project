@@ -3,17 +3,43 @@
         <RouterLink to="/" class="headerBtn" exact>Home</RouterLink>
         <RouterLink to="/about" class="headerBtn">About</RouterLink>
         <RouterLink to="/nnn" class="headerBtn">NotFound</RouterLink>
-        <RouterLink to="/register" class="loginBtn">Login</RouterLink>
-        <RouterLink to="/register" class="registerBtn">Register</RouterLink>
+        <RouterLink to="/login" class="loginBtn" v-show="!userLogged">Login</RouterLink>
+        <RouterLink to="/register" class="registerBtn" v-show="!userLogged">Register</RouterLink>
+        <div class="loginBtn" v-show="userLogged">{{ getUserData }}</div>
+        <div class="registerBtn" v-show="userLogged" @click="logout">Logout</div>
     </nav>
 </template>
 
 <script>
+import userData from '@/store/userData';
+
 export default {
     data() {
         return {
-
         };
+    },
+    computed: {
+        userLogged() {
+            if (this.$store.getters.GET_USER_OBJECT.user == undefined) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        },
+        getUserData() {
+            if (this.$store.getters.GET_USER_OBJECT.user == undefined) {
+                return '';
+            }
+            else {
+                return this.$store.getters.GET_USER_OBJECT.user.email;
+            }
+        }
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch('LOGOUT_USER');
+        }
     }
 };
 </script>

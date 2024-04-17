@@ -39,10 +39,17 @@ const getPromotion = (id) => get(`http://localhost:3000/promotion/${id}`)
 const getProduct = (id) => get(`http://localhost:3000/product/${id}`)
 
 const registerUser = (userObject) => post('http://localhost:3000/createUser', userObject);
+const loginUser = (userObject) => post('http://localhost:3000/login', userObject);
+const logoutUser = () => post('http://localhost:3000/logout', {});
+
+const checkUser = () => post('http://localhost:3000/checkUser');
 // export getPromotions function
 export {
     getPromotions,
     getPromotion,
     getProduct,
-    registerUser
+    registerUser,
+    loginUser,
+    logoutUser,
+    checkUser
 }

@@ -4,7 +4,14 @@ const port = 3000;
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const session = require('express-session');
 app.use(express.json());
+app.use(session({
+    secret: 'ansda78sdya78sd8ahsdaisndouasnd',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }
+}))
 
 const corsOptions = {
     origin: 'http://localhost:5173',
@@ -64,12 +71,28 @@ app.post('/createUser', (req, res) => {
     }
 })
 
-app.post('/loginUser', (req, res) => {
+app.post('/login', (req, res) => {
     if (users.find(user => user.email === req.body.email && user.password === req.body.password)) {
+        req.session.user = req.body;
         res.json({ status: 'logged' })
     }
     else {
         res.json({ status: 'bad_data' })
+    }
+})
+
+app.post('/logout', (req, res) => {
+    req.session.user = null;
+    res.json({ status: 'logged_out' })
+})
+
+app.post('/checkUser', (req, res) => {
+    console.log(req.session.user);
+    if (req.session.user) {
+        res.json({ status: 'logged', user: req.session.user })
+    }
+    else {
+        res.json({ status: 'not_logged' })
     }
 })
 

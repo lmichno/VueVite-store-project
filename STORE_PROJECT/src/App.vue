@@ -18,6 +18,9 @@ import '@/styles/style.css'
     components: {
       AppHeader,
       AppFooter
+    },
+    beforeCreate() {
+      this.$store.dispatch('FETCH_USER');
     }
   }
 </script>

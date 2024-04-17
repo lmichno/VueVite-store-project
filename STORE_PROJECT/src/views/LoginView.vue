@@ -1,6 +1,6 @@
 <template>
     <div class="formDiv">
-        <div class="regInfo">Register</div>
+        <div class="regInfo">Login</div>
         <AppLoader v-show="loading" />
         <form @submit="onSubmit">
             <div v-show="error" class="errorMsg">{{ error }}</div>
@@ -11,9 +11,6 @@
                 <input type="password" name="password" id="password" placeholder="Password" v-model="password" class="input">
             </div>
             <div>
-                <input type="password" name="passwordConfirmation" id="passwordConfirmation" placeholder="Confirm Password" v-model="passwordRepeat" class="input">
-            </div>
-            <div>
                 <input type="submit" :disabled="disabled" value="Register" :class="{'dis': disabled, 'submit': !disabled}">
             </div>
         </form>
@@ -21,17 +18,16 @@
 </template>
 
 <script>
-import { registerUser, loginUser } from '@/api/index.js';
+import { loginUser } from '@/api/index.js';
 import AppLoader from '@/components/AppLoader.vue';
 
 export default {
-    name: 'RegisterView',
+    name: 'LoginView',
     data() {
         return {
             error: "",
             email: "",
             password:"",
-            passwordRepeat: "",
             exists: false,
             loading: false
         };
@@ -41,7 +37,7 @@ export default {
     },
     computed: {
         disabled() {
-            if (this.email.length > 3 && this.password.length > 3 && this.passwordRepeat.length > 3) {
+            if (this.email.length > 3 && this.password.length > 3) {
                 return false;
             }
             else {
@@ -52,32 +48,29 @@ export default {
     methods: {
         onSubmit(e) {
             e.preventDefault();
-            if (this.password !== this.passwordRepeat) {this.error = "Passwords do not match";return;}
             this.loading = true;
             this.error = '';
-            registerUser({email: this.email, password: this.password})
+            loginUser({email: this.email, password: this.password})
                 .then((data) => {
                     console.log('res data', data);
-                    if (data.status == 'registered') {
+                    if (data.status == 'logged') {
                         this.$store.commit("SET_USER_OBJECT", {email: this.email, password: this.password})
                         this.$router.push('/');
                     }
-                    else if(data.status == 'exists') {
-                        this.error = "User already exists";
+                    else if(data.status == 'bad_data') {
+                        this.error = "You have entered incorrect data";
                     }
                     else {
-                        this.error = "Error registering user";
+                        this.error = "Error occured, please try again later";
                     }
                     
                 }).catch((error) => {
                     this.error = error.response.data.message;
                 }).finally(() => {
                     this.loading = false;
-                    loginUser({email: this.email, password: this.password}).then(() => {
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 100);
-                    })
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 100);
             })
         }
     }
