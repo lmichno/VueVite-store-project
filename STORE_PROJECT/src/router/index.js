@@ -5,6 +5,7 @@ import AboutView from '@/views/AboutView.vue'
 import PromotionView from '@/views/PromotionView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import LoginView from '@/views/LoginView.vue'
+import SearchView from '@/views/SearchView.vue'
 
 const NotFoundView = () => import('@/views/NotFoundView.vue')
 
@@ -35,6 +36,11 @@ const router = createRouter({
       path: '/login',
       name: 'LoginView',
       component: LoginView
+    },
+    {
+      path: '/search',
+      name: 'SearchView',
+      component: SearchView
     },
     {
       path: '/:pathMatch(.*)*',

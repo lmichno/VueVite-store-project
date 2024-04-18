@@ -2,6 +2,7 @@
     <nav>
         <RouterLink to="/" class="headerBtn" exact>Home</RouterLink>
         <RouterLink to="/about" class="headerBtn">About</RouterLink>
+        <RouterLink to="/search" class="headerBtn">Search</RouterLink>
         <RouterLink to="/nnn" class="headerBtn">NotFound</RouterLink>
         <RouterLink to="/login" class="loginBtn" v-show="!userLogged">Login</RouterLink>
         <RouterLink to="/register" class="registerBtn" v-show="!userLogged">Register</RouterLink>
@@ -80,7 +81,7 @@ nav {
 
 .registerBtn {
     color: #36454F;
-    background-color:  #fff;
+    background-color: #fff;
     font-size: larger;
     font-weight: 400;
     text-decoration: none;
@@ -100,6 +101,7 @@ nav {
         font-weight: bolder;
     }
 }
+
 .loginBtn {
     color: whitesmoke;
     font-size: larger;

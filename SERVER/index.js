@@ -60,6 +60,17 @@ app.get('/product/:id', (req, res) => {
     })
 })
 
+app.get('/products', (req, res) => {
+    fs.readFile(dataPath, 'utf-8', (err, data) => {
+        if (err) {
+            console.error(err);
+        }
+        else {
+            res.json(JSON.parse(data).products)
+        }
+    })
+});
+
 app.post('/createUser', (req, res) => {
     if (users.find(user => user.email === req.body.email)) {
         res.json({ status: 'exists' })
