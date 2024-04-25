@@ -95,6 +95,7 @@ nav {
     justify-content: center;
     align-items: center;
     transition: all 0.2s ease-in-out;
+    cursor: pointer;
 
     &:hover {
         background-color: rgb(240, 240, 240);

@@ -8,13 +8,16 @@
                 <input type="email" name="email" id="email" placeholder="Email" v-model="email" class="input">
             </div>
             <div>
-                <input type="password" name="password" id="password" placeholder="Password" v-model="password" class="input">
+                <input type="password" name="password" id="password" placeholder="Password" v-model="password"
+                    class="input">
             </div>
             <div>
-                <input type="password" name="passwordConfirmation" id="passwordConfirmation" placeholder="Confirm Password" v-model="passwordRepeat" class="input">
+                <input type="password" name="passwordConfirmation" id="passwordConfirmation"
+                    placeholder="Confirm Password" v-model="passwordRepeat" class="input">
             </div>
             <div>
-                <input type="submit" :disabled="disabled" value="Register" :class="{'dis': disabled, 'submit': !disabled}">
+                <input type="submit" :disabled="disabled" value="Register"
+                    :class="{ 'dis': disabled, 'submit': !disabled }">
             </div>
         </form>
     </div>
@@ -30,7 +33,7 @@ export default {
         return {
             error: "",
             email: "",
-            password:"",
+            password: "",
             passwordRepeat: "",
             exists: false,
             loading: false
@@ -52,97 +55,104 @@ export default {
     methods: {
         onSubmit(e) {
             e.preventDefault();
-            if (this.password !== this.passwordRepeat) {this.error = "Passwords do not match";return;}
+            if (this.password !== this.passwordRepeat) { this.error = "Passwords do not match"; return; }
             this.loading = true;
             this.error = '';
-            registerUser({email: this.email, password: this.password})
+            registerUser({ email: this.email, password: this.password })
                 .then((data) => {
                     console.log('res data', data);
                     if (data.status == 'registered') {
-                        this.$store.commit("SET_USER_OBJECT", {email: this.email, password: this.password})
+                        this.$store.commit("SET_USER_OBJECT", { email: this.email, password: this.password })
                         this.$router.push('/');
                     }
-                    else if(data.status == 'exists') {
+                    else if (data.status == 'exists') {
                         this.error = "User already exists";
                     }
                     else {
                         this.error = "Error registering user";
                     }
-                    
+
                 }).catch((error) => {
                     this.error = error.response.data.message;
                 }).finally(() => {
                     this.loading = false;
-                    loginUser({email: this.email, password: this.password}).then(() => {
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 100);
-                    })
-            })
+                    if (this.error == '') {
+                        loginUser({ email: this.email, password: this.password }).then(() => {
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 100);
+                        })
+                    }
+                })
         }
     }
 }
 </script>
 
 <style scoped>
-    .formDiv {
-        height: calc(100vh - 100px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .input {
-        margin: 5px;
-        padding: 10px 10px;
-        width: 290px;
-        border-radius: 5px;
-        border: 0;
-        outline: none;
-        box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
-        transition: all 0.2s ease-in-out;
-        
-        &:focus {
-            transform: scale(1.02);
-            
-        }
-    }
-    .submit {
-        margin: 5px;
-        padding: 10px 10px;
-        width: 310px;
-        border-radius: 5px;
-        border: 0;
-        outline: none;
-        background-color: #36454F;
-        color: white;
-        cursor: pointer;
-        box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
-        transition: all 0.2s ease-in-out;
-        
-        &:hover {
-            transform: scale(1.02);
-        }
-    }
-    .regInfo {
-        margin-bottom: 20px;
-        font-size: 3em;
-        font-weight: bold;
-        color: #36454F;
-    }
-.dis {
-     margin: 5px;
-        padding: 10px 10px;
-        width: 310px;
-        border-radius: 5px;
-        border: 0;
-        outline: none;
-        background-color: #36454F;
-        color: white;
-        cursor: not-allowed;
-        box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
-        opacity: 0.5;
+.formDiv {
+    height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
+
+.input {
+    margin: 5px;
+    padding: 10px 10px;
+    width: 290px;
+    border-radius: 5px;
+    border: 0;
+    outline: none;
+    box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
+    transition: all 0.2s ease-in-out;
+
+    &:focus {
+        transform: scale(1.02);
+
+    }
+}
+
+.submit {
+    margin: 5px;
+    padding: 10px 10px;
+    width: 310px;
+    border-radius: 5px;
+    border: 0;
+    outline: none;
+    background-color: #36454F;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+.regInfo {
+    margin-bottom: 20px;
+    font-size: 3em;
+    font-weight: bold;
+    color: #36454F;
+}
+
+.dis {
+    margin: 5px;
+    padding: 10px 10px;
+    width: 310px;
+    border-radius: 5px;
+    border: 0;
+    outline: none;
+    background-color: #36454F;
+    color: white;
+    cursor: not-allowed;
+    box-shadow: 0px 0px 14px 0px rgba(66, 68, 90, 1);
+    opacity: 0.5;
+}
+
 .errorMsg {
     color: white;
     font-size: 1em;
